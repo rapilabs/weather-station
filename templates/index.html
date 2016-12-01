@@ -2,18 +2,30 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>HTML5 boilerplate – all you really need…</title>
-	<link rel="stylesheet" href="css/style.css">
+	<title>Melbourne Weather</title>
  <style>
+  html, body {
+   height: 100%;
+  }
+  body {
+   display: flex;
+   flex-direction: column;
+  }
   h1 {
    text-align: center;
   }
-  .flex {
+  .container {
+   flex: 1;
    display: flex;
-   justify-content: space-around;
+   overflow-x: scroll;
   }
-  .flex a img {
-   max-width: 100%;
+  .item {
+   display: flex;
+   min-width: 100%;
+   height: 100%;
+   text-align: center;
+   justify-content: center;
+			align-items: center;
   }
  </style>
 </head>
@@ -21,19 +33,36 @@
 <body>
 	<h1>Melbourne Weather</h1>
 
- <p class="flex">
-  <a href="{{ temp_url }}">
-   <img src="{{ temp_graph_url }}" alt="Melbourne Olympic Park Air Temperature" />
-  </a>
- </p>
+ <div class="container">
+  <div class="item temp">
+   <a href="{{ temp_url }}">
+    <img src="{{ temp_graph_url }}" alt="Melbourne Olympic Park Air Temperature" />
+   </a>
+  </div>
+  <div class="item mslp">
+   <a href="http://www.bom.gov.au/australia/charts/synoptic_col.shtml">
+    <img src="http://radargifme.herokuapp.com/mslp/24" alt="MSLP analysis" />
+   </a>
+  </div>
+  <div class="item rain">
+   <a href="http://www.bom.gov.au/products/IDR023.loop.shtml">
+    <img src="http://radargifme.herokuapp.com" alt="Rain radar" />
+   </a>
+  </div>
+ </div>
 
- <p class="flex">
-  <a href="http://www.bom.gov.au/australia/charts/synoptic_col.shtml">
-   <img src="http://radargifme.herokuapp.com/mslp/24" alt="MSLP analysis" />
-  </a>
-  <a href="http://www.bom.gov.au/products/IDR023.loop.shtml">
-   <img src="http://radargifme.herokuapp.com" alt="Rain radar" />
-  </a>
- </p>
+ <script>
+  const slides = ['temp', 'mslp', 'rain'];
+  let slideNum = 0;
+
+  window.onload = () => {
+   console.log('oh hai');
+   setInterval(() => {
+    document.getElementsByClassName(slides[slideNum])[0].scrollIntoView();
+    slideNum++;
+    slideNum = slideNum % slides.length;
+   }, 20000);
+  };
+ </script>
 </body>
 </html>
