@@ -17,7 +17,7 @@
   .container {
    flex: 1;
    display: flex;
-   overflow-x: scroll;
+   transition: transform 0.5s;
   }
   .item {
    display: flex;
@@ -52,15 +52,16 @@
  </div>
 
  <script>
+  const container = document.getElementsByClassName('container')[0];
   const slides = ['temp', 'mslp', 'rain'];
-  let slideNum = 0;
+  let slideNum = 1;
 
   window.onload = () => {
    console.log('oh hai');
    setInterval(() => {
-    document.getElementsByClassName(slides[slideNum])[0].scrollIntoView();
-    slideNum++;
-    slideNum = slideNum % slides.length;
+    const translation = 'translateX(' + (slideNum * -100) + '%)';
+    container.style.transform = translation;
+    slideNum = (slideNum + 1) % slides.length;
    }, 20000);
   };
  </script>
